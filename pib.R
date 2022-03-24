@@ -49,10 +49,29 @@ lm(formula = gdpPercap ~ lifeExp, data = gap.dt)
 gdp_le_model <- lm(gdpPercap ~ lifeExp, data = treino)
 print(gdp_le_model)
 
-treino %>% 
-  add_predictions(gdp_le_model) %>% 
-  ggplot(aes(x=year, y=pred)) + geom_line() +
-  geom_point(aes(y=gdpPercap))
+summary(gdp_le_model)
+
+# salvando modelo com log na variavel x
+gdp_le_log_model <- lm(log(gdpPercap) ~ lifeExp, data = treino)
+print(gdp_le_log_model)
+
+summary(gdp_le_log_model)
+
+ggplot(treino, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(color = "#69b3a2")) +
+  stat_smooth(method = "lm",
+              col = "#C42126",
+              se = FALSE,
+              size = 1)
+
+
+ggplot(treino, aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point(aes(color = "#69b3a2")) +
+  stat_smooth(method = "lm",
+              col = "#C42126",
+              se = FALSE,
+              size = 1)
+
 
 # https://mawds.github.io/r-tidyverse-intro/06-model-fitting/
 
